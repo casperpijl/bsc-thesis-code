@@ -1,0 +1,8 @@
+# Packages used by the experiment.
+# rdkit is used by the matcher to match chemical names through InChI keys.
+# pyyaml is used by the vendored BigMixSolDB matcher in third_party/.
+pandas==3.0.2
+openai==2.28.0
+httpx==0.28.1
+rdkit==2026.3.1
+pyyaml==6.0.3

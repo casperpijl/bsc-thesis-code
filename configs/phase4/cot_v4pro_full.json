@@ -1,0 +1,28 @@
+{
+  "experiment_id": "phase4_v4pro_cot_full",
+  "model": {
+    "provider": "openrouter",
+    "slug": "deepseek/deepseek-v4-pro",
+    "params": {
+      "temperature": 1.0,
+      "top_p": 1.0,
+      "max_tokens": 32768
+    },
+    "thinking_mode": true,
+    "reasoning": {"effort": "high"}
+  },
+  "corpus": {
+    "subset": [
+      "10.1021_acs.jced.1c00485",
+      "10.1016_j.fluid.2015.07.032",
+      "10.1016_j.molliq.2013.07.014",
+      "10.1016_j.molliq.2016.03.021",
+      "10.1016_j.jct.2015.10.016",
+      "10.1016_j.molliq.2021.116233",
+      "10.1016_j.jct.2023.107231",
+      "10.1007_s10953-019-00861-7"
+    ]
+  },
+  "prompt": "prompts/expert_canonical.md",
+  "seeds": [42]
+}

@@ -1,0 +1,63 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "Experiment config (run.py)",
+  "description": "Single-experiment config consumed by run.py. One model, one prompt, one corpus subset, one or more seeds.",
+  "type": "object",
+  "required": ["experiment_id", "model", "corpus", "prompt", "seeds"],
+  "additionalProperties": false,
+  "properties": {
+    "experiment_id": {
+      "type": "string",
+      "description": "Becomes the output folder name under out/. Use YYYY-MM-DD_slug convention."
+    },
+    "model": {
+      "type": "object",
+      "required": ["provider", "slug", "params"],
+      "additionalProperties": false,
+      "properties": {
+        "provider": {
+          "type": "string",
+          "enum": ["openrouter"]
+        },
+        "slug": {
+          "type": "string",
+          "description": "OpenRouter model slug, e.g. qwen/qwen3.5-9b or google/gemma-2-27b-it."
+        },
+        "params": {
+          "type": "object",
+          "description": "Open-ended kwargs. Known OpenAI-standard keys (temperature, top_p, presence_penalty, frequency_penalty, max_tokens, n, stop, logprobs, top_logprobs) go to chat.completions.create(); everything else (e.g. top_k) is forwarded via extra_body."
+        },
+        "thinking_mode": {
+          "type": "boolean",
+          "description": "Optional. When present, translates to chat_template_kwargs.enable_thinking. Omit for models without a thinking toggle."
+        },
+        "reasoning": {
+          "type": "object",
+          "description": "Optional. When present, forwarded as-is to OpenRouter's reasoning.* block AND include_reasoning is set to true (so the trace returns in the response). Overrides the default exclude=true production behaviour. Used by Phase 4 CoT subsample (V4 Pro thinking-on)."
+        }
+      }
+    },
+    "corpus": {
+      "type": "object",
+      "required": ["subset"],
+      "additionalProperties": false,
+      "properties": {
+        "subset": {
+          "type": "array",
+          "items": { "type": "string" },
+          "minItems": 1,
+          "description": "Explicit DOI list (underscore-encoded, matches set_extractions_vlm filenames)."
+        }
+      }
+    },
+    "prompt": {
+      "type": "string",
+      "description": "Path to a prompt .md file. Content before '## System prompt' is stripped."
+    },
+    "seeds": {
+      "type": "array",
+      "items": { "type": "integer" },
+      "minItems": 1
+    }
+  }
+}
